@@ -1,13 +1,23 @@
 def gcd(a,b):  
-    if a == 0 : 
+    if a == 0: 
         return b  
     return gcd(b%a,a)
 
+def extended_gcd(a,b):
+	g = a
+	for c in b:
+		g = gcd(g,c)
+	return g
+
 while True:
 	try:
-		n1 = int(input('Enter a number: '))
-		n2 = int(input('Enter a number: '))
-		print('GCD is: ',gcd(n1,n2))
+		args = []
+		while True:
+			try:
+				args.append(int(input('Enter a number: ')))
+			except:
+				break
+		print('GCD is: ',extended_gcd(args[0],args[1:]))
 	except Exception as e:
 		print(e)
 		break
