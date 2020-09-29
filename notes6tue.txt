@@ -1,0 +1,20 @@
+Confidence: 5 / 5
+
+
+Your turn:
+	gcd(184,24) = 8
+	8 = 184 * -1 + 24 * 8
+
+	I just now noticed it was actually 
+
+	gcd(189,24) = 3
+	3 = 189 * d + 24 * c
+
+	
+	LCM:
+
+	lcm(24,60) = 120
+	lcm(17,57) = 696
+	lcm(210,2730,945) = 24570
+
+	

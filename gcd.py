@@ -1,12 +1,16 @@
-def gcd(a,b):  
-    if a == 0: 
-        return b  
-    return gcd(b%a,a)
+def gcd(a,b):
+    if a == 0:
+		print(a)
+		return b
+	return gcd(b%a,a)
 
 def extended_gcd(a,b):
 	g = a
 	for c in b:
-		g = gcd(g,c)
+		try:
+			g = gcd(g,c)
+		except Exception as e:
+			print(e)
 	return g
 
 while True:
