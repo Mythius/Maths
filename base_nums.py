@@ -30,7 +30,7 @@ def baseToDec(num,base=10):
 		result += toDec[num[i].lower()] * base ** i
 	return result
 
-toBase = input('To Custom base (y,n)').lower() == 'y'
+toBase = input('To Custom base (y,n)').lower() == 'n'
 
 while True:
 	if toBase:
