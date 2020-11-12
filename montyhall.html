@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		td{
+			border: 1px solid white;
+			text-align: center;
+			padding: 3px;
+		}
+		table{
+			display: block;
+			margin: auto;
+		}
+		tbody{
+			display: inline;
+		}
+		div{
+			padding: 5px;
+			color: white;
+			background-color: gray;
+			display: block;
+			box-sizing: border-box;
+			text-align: center;
+		}
+		body{
+			display: grid;
+			grid-template-columns: repeat(2,calc(50% - 2.5px));
+			grid-column-gap: 5px;
+			font-family: monospace;
+		}
+		button{
+			font-family: monospace;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h4>Where is the Prize</h4>
+		<button onclick="makeChoice(0)" id="a">Door A</button>
+		<button onclick="makeChoice(1)" id="b">Door B</button>
+		<button onclick="makeChoice(2)" id="c">Door C</button>
+		<br><br>
+		<button id=auto onclick="toggleAuto()">Automate</button>
+		<p>None</p>
+	</div>
+	<div>
+		<table>
+			<tr><td></td><td>Not Changed</td><td>Changed</td></tr>
+			<tr><td>Win</td><td id=wn>0</td><td id=wc>0</td></tr>
+			<tr><td>Lose</td><td id=ln>0</td><td id=lc>0</td></tr>
+			<tr><td>%</td><td id=pn>0%</td><td id=pc>0%</td></tr>
+		</table>
+	</div>
+	<script>
+		function obj(id){return document.querySelector(id)}
+		Node.prototype.on = (a,b,c) => {this.addEventListener(a,b,c)};
+		function random(min,max){return min+Math.floor(Math.random()*(max-min+1))}
+
+		function setup(){
+			r = random(0,2);
+			opts = [obj('#a'),obj('#b'),obj('#c')];
+			for(let opt of opts) opt.disabled = false;
+			choice = null;
+			// obj('p').innerHTML = '';
+		}
+
+		let r,opts,choice;
+
+		setup();
+
+		let auto = false;
+
+		function toggleAuto(){
+			auto = !auto;
+			setup();
+			if(auto) {
+				obj('#auto').innerHTML = 'Stop';
+				loop();
+			} else {
+				obj('#auto').innerHTML = 'Automate'
+			}
+		}
+
+		function loop(){
+			if(auto) setTimeout(loop,1000/60);
+			opts[random(0,2)].click();
+		}
+
+		function makeChoice(c){
+			if(typeof choice != 'number'){
+				choice = c;
+				let temp = opts[c];
+				opts.filter(e=>e!=temp&&e!=opts[r]).sort((a,b)=>Math.random()-.5)[0].disabled = true;
+			} else {
+				// console.log(choice,r);
+				if(choice == r){
+					obj('p').innerHTML = 'Win';
+					if(choice == c){
+						obj('#wn').innerHTML++;
+					} else {
+						obj('#wc').innerHTML++;
+					}
+				} else {
+					obj('p').innerHTML = 'Lose';
+					if(choice == c){
+						obj('#ln').innerHTML++;
+					} else {
+						obj('#lc').innerHTML++;
+					}
+				}
+				obj('#pn').innerHTML = (obj('#wn').innerHTML / (Number(obj('#wn').innerHTML) + Number(obj('#ln').innerHTML)) * 100).toFixed(2) + '%';
+				obj('#pc').innerHTML = (obj('#wc').innerHTML / (Number(obj('#wc').innerHTML) + Number(obj('#lc').innerHTML)) * 100).toFixed(2) + '%';
+				setup();
+			}
+		}
+
+		function addItem(str){
+			let e = document.createElement('li');
+			e.innerHTML = str;
+			obj('ul').appendChild(e);
+		}
+
+	</script>
+</body>
+</html>
